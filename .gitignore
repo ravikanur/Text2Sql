@@ -163,3 +163,4 @@ cython_debug/
 
 #others
 *.csv
+*.ppk
