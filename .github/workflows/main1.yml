@@ -80,7 +80,7 @@ jobs:
       
       - name: Pull latest images
         run: |
-         docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME1 }}:latest
+         sudo docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME1 }}:latest
 
       #- name: Stop and remove sensor container if running
       #  run: |
@@ -88,8 +88,8 @@ jobs:
 
       - name: Run Docker Image to serve users
         run: |
-         docker run -d ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME1 }}:latest
+         sudo docker run -d ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME1 }}:latest
 
       - name: Clean previous images and containers
         run: |
-         docker system prune -f
+         sudo docker system prune -f
