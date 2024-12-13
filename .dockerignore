@@ -1,0 +1,9 @@
+Data/
+logs/
+__pycache__
+*.egg-info
+dev_user_accessKeys.csv
+How to instantiate EC2 machine and make it ready for docker deployment.docx
+sys_user_cassandra_credentials.csv
+Text2Sql\text2sql-dev.ppk
+.chainlit
