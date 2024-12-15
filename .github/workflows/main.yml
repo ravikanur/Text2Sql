@@ -48,6 +48,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY_NAME }}
+          ECR_REPOSITORY1: ${{ secrets.AWS_ECR_REPOSITORY_NAME1 }}
           IMAGE_TAG: latest
         run: |
           # Build a docker container and
@@ -56,7 +57,7 @@ jobs:
           echo $ECR_REGISTRY
           echo $ECR_REPOSITORY
           #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker build --build-arg="AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" --build-arg="AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" --build-arg="AWS_ECR_REGION=${{ secrets.AWS_ECR_REGION }}" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build --build-arg="ECR_REGISTRY=${{ env.ECR_REGISTRY }}" --build-arg="ECR_REPOSITORY=${{ env.ECR_REPOSITORY1}}" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           
@@ -81,7 +82,7 @@ jobs:
       
       - name: Pull latest images
         run: |
-         docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:latest
+         sudo docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:latest
 
       #- name: Stop and remove sensor container if running
       #  run: |
@@ -89,7 +90,7 @@ jobs:
 
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 8000:8000 --name=text2sql -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_ECR_REGION=${{ secrets.AWS_ECR_REGION }}' -e HUGGINGFACE_API_KEY=HUGGINGFACE_API_KEY  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:latest
+         sudo docker run -d -p 8000:8000 --name=text2sql -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_ECR_REGION=${{ secrets.AWS_ECR_REGION }}' -e HUGGINGFACE_API_KEY=HUGGINGFACE_API_KEY  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:latest
 
       - name: Clean previous images and containers
         run: |
