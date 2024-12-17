@@ -1,12 +1,8 @@
 FROM ubuntu:latest
 
-ARG ECR_REGISTRY
-
-ARG ECR_REPOSITORY
+FROM text2sql_python_dependency
 
 #FROM python:3.10-slim
-
-FROM $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
 EXPOSE 8000
 
