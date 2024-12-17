@@ -89,7 +89,7 @@ jobs:
 
       - name: Run Docker Image to serve users
         run: |
-         sudo docker run -d -p 8000:8000 --name=text2sql -e 'WEAVIATE_API_KEY=${{ secrets.WEAVIATE_API_KEY }}' -e 'WEAVIATE_CLUSTER_ENV=${{ secrets.WEAVIATE_CLUSTER_ENV }}' -e 'OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}}' -e 'HUGGINGFACE_API_KEY=${{ secrets.HUGGINGFACE_API_KEY}}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:latest
+         sudo docker run -d -p 8000:8000 --name=text2sql -e 'WEAVIATE_API_KEY=${{ secrets.WEAVIATE_API_KEY }}' -e 'WEAVIATE_CLUSTER_ENV=${{ secrets.WEAVIATE_CLUSTER_ENV }}' -e 'OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}}' -e 'HUGGINGFACE_API_KEY=${{ secrets.HUGGINGFACE_API_KEY }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:latest
 
       - name: Clean previous images and containers
         run: |
