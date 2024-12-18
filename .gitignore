@@ -165,5 +165,7 @@ cython_debug/
 *.csv
 *.ppk
 *.docx
+~WRL0003.tmp
 Data/
 logs/
+.chainlit/

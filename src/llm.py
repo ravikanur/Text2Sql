@@ -14,7 +14,7 @@ HUGGINGFACE_API_KEY = os.environ['HUGGINGFACE_API_KEY']
 
 class Text2Sql_llm:
     def __init__(self) :
-        self.model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+        self.model_id = "RaviKanur/Phi-3.5-mini-4k-instruct-text2sql"
         logger.info("Initializing")
 
     def create_prompt_template(self) -> PromptTemplate :
