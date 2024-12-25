@@ -2,6 +2,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnablePassthrough, RunnableSequence
 from langchain_core.output_parsers import StrOutputParser
 from langchain_huggingface.llms import HuggingFacePipeline
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from src.helper import PROMPT_TEMPLATE
 from src.logger1 import logger
 from dotenv import load_dotenv
@@ -25,8 +26,10 @@ class Text2Sql_llm:
     
     def get_llm(self) -> HuggingFacePipeline:
         logger.info("Entered get_llm method")
-        hf_llm = HuggingFacePipeline.from_model_id(model_id=self.model_id, task="text-generation", 
-                                           model_kwargs={'max_length':512})
+        model = AutoModelForCausalLM.from_pretrained(self.model_id, token=HUGGINGFACE_API_KEY)
+        tokenizer = AutoTokenizer.from_pretrained(self.model_id, token=HUGGINGFACE_API_KEY)
+        pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, model_kwargs={'max_length':512})
+        hf_llm = HuggingFacePipeline(name="", pipeline=pipe)
         
         return hf_llm
     
