@@ -36,7 +36,7 @@ class Text2Sql_llm:
         logger.info("Downloaded the adapter")
         tokenizer = AutoTokenizer.from_pretrained(self.model_id, token=HUGGINGFACE_API_KEY)
         logger.info("Downloaded the tokenizer")
-        pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, model_kwargs={'max_length':512})
+        pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=512, model_kwargs={'max_length':512})
         hf_llm = HuggingFacePipeline(name="", pipeline=pipe)
         
         return hf_llm
