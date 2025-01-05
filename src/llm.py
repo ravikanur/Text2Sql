@@ -34,7 +34,7 @@ class Text2Sql_llm:
         logger.info("Downloaded the model")
         model_1 = PeftModel.from_pretrained(model, self.model_id) 
         logger.info("Downloaded the adapter")
-        tokenizer = AutoTokenizer.from_pretrained(self.base_model_id, token=HUGGINGFACE_API_KEY)
+        tokenizer = AutoTokenizer.from_pretrained(self.model_id, token=HUGGINGFACE_API_KEY)
         logger.info("Downloaded the tokenizer")
         pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, model_kwargs={'max_length':512})
         hf_llm = HuggingFacePipeline(name="", pipeline=pipe)
