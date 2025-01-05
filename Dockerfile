@@ -16,6 +16,7 @@ RUN aws ecr get-login-password --region ap-south-1 | docker login --username AWS
 654654307335.dkr.ecr.ap-south-1.amazonaws.com
 
 FROM 654654307335.dkr.ecr.ap-south-1.amazonaws.com/dev/text2sql_python_dependency:latest
+#FROM text2sql_python_dependency:latest
 
 #FROM python:3.10-slim
 

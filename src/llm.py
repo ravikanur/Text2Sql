@@ -3,6 +3,7 @@ from langchain_core.runnables import RunnablePassthrough, RunnableSequence
 from langchain_core.output_parsers import StrOutputParser
 from langchain_huggingface.llms import HuggingFacePipeline
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from peft import PeftModel
 from src.helper import PROMPT_TEMPLATE
 from src.logger1 import logger
 from dotenv import load_dotenv
@@ -15,8 +16,11 @@ HUGGINGFACE_API_KEY = os.environ['HUGGINGFACE_API_KEY']
 
 class Text2Sql_llm:
     def __init__(self) :
+        self.base_model_id = "microsoft/Phi-3-mini-4k-instruct"
         self.model_id = "RaviKanur/Phi-3.5-mini-4k-instruct-text2sql"
-        logger.info("Initializing")
+        #self.base_model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+        #self.model_id = "RaviKanur/TinyLlama1"
+        logger.info("Initializing Text2sql class")
 
     def create_prompt_template(self) -> PromptTemplate :
         logger.info("Entered create_prompt_template method")
@@ -26,8 +30,12 @@ class Text2Sql_llm:
     
     def get_llm(self) -> HuggingFacePipeline:
         logger.info("Entered get_llm method")
-        model = AutoModelForCausalLM.from_pretrained(self.model_id, token=HUGGINGFACE_API_KEY)
-        tokenizer = AutoTokenizer.from_pretrained(self.model_id, token=HUGGINGFACE_API_KEY)
+        model = AutoModelForCausalLM.from_pretrained(self.base_model_id, token=HUGGINGFACE_API_KEY)
+        logger.info("Downloaded the model")
+        model_1 = PeftModel.from_pretrained(model, self.model_id) 
+        logger.info("Downloaded the adapter")
+        tokenizer = AutoTokenizer.from_pretrained(self.base_model_id, token=HUGGINGFACE_API_KEY)
+        logger.info("Downloaded the tokenizer")
         pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, model_kwargs={'max_length':512})
         hf_llm = HuggingFacePipeline(name="", pipeline=pipe)
         
