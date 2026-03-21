@@ -11,6 +11,7 @@ load_dotenv()
 WEAVIATE_CLUSTER_ENV = os.environ['WEAVIATE_CLUSTER_ENV']
 WEAVIATE_API_KEY = os.environ['WEAVIATE_API_KEY']
 OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+HUGGINGFACE_API_KEY = os.environ['HUGGINGFACE_API_KEY']
 logger.info(f"Weaviate API key: {WEAVIATE_API_KEY}")
 logger.info(f"WEAVIATE_CLUSTER_ENV: {WEAVIATE_CLUSTER_ENV}")
 
@@ -18,7 +19,7 @@ def get_weaviate_collection(collection_name : str = 'T2SQL'):
     try:
         logger.info("Entered get_weaviate_collection method")
         client: WeaviateClient = weaviate.connect_to_weaviate_cloud(cluster_url=WEAVIATE_CLUSTER_ENV, auth_credentials=weaviate.auth.AuthApiKey(WEAVIATE_API_KEY),
-                                                    headers={"X-OpenAI-Api-Key": OPENAI_API_KEY})
+                                                    headers={"X-HuggingFace-Api-Key": HUGGINGFACE_API_KEY})
 
         collection = client.collections.get(collection_name)
     except Exception as e:
