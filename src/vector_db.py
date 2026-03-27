@@ -10,7 +10,7 @@ from src.exception import CustomException
 load_dotenv()
 WEAVIATE_CLUSTER_ENV = os.environ['WEAVIATE_CLUSTER_ENV']
 WEAVIATE_API_KEY = os.environ['WEAVIATE_API_KEY']
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+#OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
 HUGGINGFACE_API_KEY = os.environ['HUGGINGFACE_API_KEY']
 logger.info(f"Weaviate API key: {WEAVIATE_API_KEY}")
 logger.info(f"WEAVIATE_CLUSTER_ENV: {WEAVIATE_CLUSTER_ENV}")
